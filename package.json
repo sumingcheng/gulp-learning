@@ -1,9 +1,11 @@
 {
   "name": "gulp-learning",
   "version": "1.0.0",
+  "type": "module",
   "description": "gulp-learning",
   "main": "index.js",
   "scripts": {
+    "gulp": "gulp -r esm",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +21,10 @@
   "homepage": "https://github.com/sumingcheng/gulp-learning#readme",
   "devDependencies": {
     "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2"
   }
 }

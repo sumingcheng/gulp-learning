@@ -1,0 +1,35 @@
+/* 定义变量 */
+:root {
+    --primary-color: #009688;
+}
+
+/* 样式规则 */
+.header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+}
+
+.section {
+    background-color: #ffc107;
+    color: black;
+    padding: 1rem;
+}
+
+.section p {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #00796b;
+}

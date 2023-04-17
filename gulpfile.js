@@ -2,6 +2,10 @@ import gulp from 'gulp'
 import concat from 'gulp-concat'
 import uglify from 'gulp-uglify'
 import cleanCSS from 'gulp-clean-css'
+import browserSync from 'browser-sync'
+import rename from 'gulp-rename' // 重命名插件
+import sass from 'gulp-sass' // 编译 SASS 插件
+import autoprefixer from 'gulp-autoprefixer' // 自动添加 CSS 前缀插件
 
 // 定义一个名为 "js" 的任务
 gulp.task('js', () => {
@@ -42,20 +46,43 @@ gulp.task('default', gulp.series('js', 'css'))
 * 自动化任务
 * 监听js文件变化，自动刷新浏览器
 * */
-import browserSync from 'browser-sync'
 
-gulp.task('server', function() {
+gulp.task('server', function () {
   browserSync.init({
     server: {
-      baseDir: "./"
+      baseDir: './'
     }
-  });
-});
+  })
+})
 
 gulp.task('watch', function () {
-  gulp.watch('automation/*.js').on('change', browserSync.reload);
-});
+  gulp.watch('automation/*.js').on('change', browserSync.reload)
+})
 
-gulp.task('hot', gulp.parallel('server', 'watch'));
+gulp.task('hot', gulp.parallel('server', 'watch'))
+
+/*
+* 对项目进行打包
+* */
 
 
+gulp.task('scripts', function () {
+  return gulp.src([
+    'src/a.js', // 第一步，选择需要打包的文件
+    'src/b.js'
+  ])
+  .pipe(concat('bundle.js')) // 第二步，合并文件并重命名
+  .pipe(uglify()) // 第三步，压缩 JavaScript 代码
+  .pipe(rename({ suffix: '.min' }))
+  .pipe(gulp.dest('out/js/')) // 第四步，将打包好的文件输出到 out/js/ 目录下
+})
+
+gulp.task('styles', function () {
+  return gulp.src(['src/a.css', 'src/b.css'])
+  .pipe(autoprefixer()) //自动添加 CSS 前缀
+  .pipe(rename({ suffix: '.min' })) //重命名文件
+  .pipe(concat('cancat.css')) // 合并文件并重命名
+  .pipe(gulp.dest('out/css/')) // 将打包好的文件输出到 out/css/ 目录下
+})
+
+gulp.task('build', gulp.series('scripts', 'styles')) // 定义默认任务，依赖于 scripts 和 styles 任务

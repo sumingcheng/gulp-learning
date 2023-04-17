@@ -24,3 +24,38 @@ gulp.task('css', () => {
 // 执行后，会发现 dist/js/scripts.js 和 dist/css/styles.css 文件已经生成了
 // 但是，这两个文件都是压缩过的，不方便查看
 gulp.task('default', gulp.series('js', 'css'))
+
+
+// 压缩图片
+// import imagemin from 'gulp-imagemin'
+// import image from 'gulp-image'
+
+// .pipe() 方法通常用于将一个或多个 gulp 插件链接在一起，将文件流传递给下一个插件进行处理
+// gulp.task('img', () =>
+//     gulp.src('img/*.jpg')
+//     .pipe(image())
+//     .pipe(gulp.dest('dist/img'))
+// )
+
+
+/*
+* 自动化任务
+* 监听js文件变化，自动刷新浏览器
+* */
+import browserSync from 'browser-sync'
+
+gulp.task('server', function() {
+  browserSync.init({
+    server: {
+      baseDir: "./"
+    }
+  });
+});
+
+gulp.task('watch', function () {
+  gulp.watch('automation/*.js').on('change', browserSync.reload);
+});
+
+gulp.task('hot', gulp.parallel('server', 'watch'));
+
+
